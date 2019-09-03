@@ -11,6 +11,8 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\User::class, 5)->create();
+        factory(App\User::class, 50)->create()->each(function ($user) {
+               $user->shoppingCart()->save(App\ShoppingCart::create(['user_id' => $user->id]));
+        });
     }
 }
