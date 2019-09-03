@@ -18,7 +18,7 @@ class ShoppingCartsSeeder extends Seeder
         $carts->each(function ($cart) use ($products) {
             $randomProducts = $products->random(5);
             $randomProducts->each(function ($product) use ($cart) {
-                $cart->products()->save($product);
+                $cart->products()->save($product, ['quantity' => rand(1, 10)]);
             });
         });
     }

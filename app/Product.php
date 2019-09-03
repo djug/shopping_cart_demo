@@ -8,6 +8,6 @@ class Product extends Model
 {
     public function cart()
     {
-        return $this->belongsToMany(ShoppingCart::class);
+        return $this->belongsToMany(ShoppingCart::class)->withTimestamps();
     }
 }

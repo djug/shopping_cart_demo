@@ -12,7 +12,7 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         factory(App\User::class, 50)->create()->each(function ($user) {
-               $user->shoppingCart()->save(App\ShoppingCart::create(['user_id' => $user->id]));
+               $user->cart()->save(App\ShoppingCart::create(['user_id' => $user->id]));
         });
     }
 }
