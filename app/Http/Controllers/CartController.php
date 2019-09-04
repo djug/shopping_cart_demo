@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\ShoppingCart;
 use App\Product;
 use Auth;
+use App\Providers\ProductRemovedFromCart;
 
 class CartController extends Controller
 {
@@ -34,6 +35,8 @@ class CartController extends Controller
         $cart =  $this->getCurrentUserCart();
 
         $cart->products()->detach($product->id);
+
+        event(new ProductRemovedFromCart($cart, $product));
 
         return response(null, 204);
     }
