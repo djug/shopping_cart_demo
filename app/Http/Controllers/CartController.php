@@ -4,41 +4,42 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\ShoppingCart;
+use App\Product;
 use Auth;
 
 class CartController extends Controller
 {
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
+
     public function get()
     {
+        return $this->getCurrentUserCart();
+    }
+
+    public function add(Product $product)
+    {
+        $cart =  $this->getCurrentUserCart();
+
+        $cart->products()->attach($product->id);
+
+        $response = [
+            'cart' => $cart->id,
+            'product' => $product->id
+        ];
+        return response($response, 201);
+    }
+
+    public function remove(Product $product)
+    {
+        $cart =  $this->getCurrentUserCart();
+
+        $cart->products()->detach($product->id);
+
+        return response(null, 204);
+    }
+
+    protected function getCurrentUserCart()
+    {
         return Auth::user()->cart;
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }
