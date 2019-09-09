@@ -8,8 +8,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use DB;
 use Carbon\Carbon;
 
-class LogProductRemovedFromCart
+class LogProductRemovedFromCart implements ShouldQueue
 {
+    public $queue = 'removed-from-cart';
     /**
      * Create the event listener.
      *
