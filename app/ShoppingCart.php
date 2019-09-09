@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class ShoppingCart extends Model
 {
 
+    protected $fillable = ['user_id'];
     protected $appends = ['products_list'];
     protected $hidden = ['products'];
 
@@ -26,7 +27,11 @@ class ShoppingCart extends Model
 
         $this->products->each(function ($product) use (&$productsWithQuantities) {
 
-            $productsWithQuantities [$product->id] = ['name' => $product->name, 'quantity' => $product->pivot->quantity];
+            $productsWithQuantities [$product->id] = [
+                'id' => $product->id,
+                'name' => $product->name,
+                'quantity' => $product->pivot->quantity
+            ];
         });
         return $productsWithQuantities;
     }
